@@ -1,0 +1,27 @@
+﻿@model IEnumerable<byudigs.Models.Plot>
+
+
+
+@foreach (var x in Model)
+{
+    <div class="card card-outline-primary m-1 p-1">
+        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+            <h4>
+                @x.HighPairEw
+            </h4>
+        </a>
+        <!--Made a collapsable pill so that all the information is not instantly clicked on but it can be seen if you click on one to open-->
+        <div class="row">
+            <div class="col">
+                <!--MAke this collapsable so that you have to have the inforamtion appear by clicking on the time title-->
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <div class="card card-body">
+                        <p>Group Name: @x.PlotId</p>
+                        <p>Group Size: @x.HighPairNs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

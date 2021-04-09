@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model byudigs.Models.Burial
+
+<!--Create a form that will pull new movie information-->
+    <form method="post" asp-action="AddBurialSimple">
+        <select id="PlotInfo" name="PlotInfo">
+            @foreach (var plot in ViewBag.Plots)
+            {
+                <option value="@plot.PlotId">@plot.BurialLocationNs @plot.LowPairNs/@plot.HighPairNs @plot.BurialLocationEw @plot.LowPairNs/@plot.HighPairEw</option>
+            }
+        </select><br />
+        <!--Create Input for LowPair -->
+        <label asp-for="BurialNum">LowPairNs</label>
+        <input asp-for="BurialNum" />
+
+        <!--Create Input for HighPair -->
+        <label asp-for="Notes">HighPairNs</label>
+        <input asp-for="Notes" />
+
+        <!--Create Input for Year-->
+        <!--<label asp-for="BurialLocationNs">BurialLocationNs</label>
+    <input asp-for="BurialLocationNs" />-->
+        <!--Create Input for Director-->
+        <!--<label asp-for="LowPairEw">LowPairEW</label>
+    <input asp-for="LowPairEw" /><br />-->
+        <!--Create Input for Director-->
+        <!--<label asp-for="HighPairEw">HighPairEW</label>
+    <input asp-for="HighPairEw" /><br />-->
+        <!--Create Input for Director-->
+        <!--<label asp-for="BurialLocationEw">BurialLocationEw</label>
+    <input asp-for="BurialLocationEw" /><br />-->
+        <button type="submit">Submit Your Application</button>
+    </form>
