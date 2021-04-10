@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model byudigs.Models.Plot
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <form method="post" asp-action="AddNewPlot">
+        <!--Create Input for LowNS -->
+        <label asp-for="LowPairNs">Low Pair N/S</label>
+        <input asp-for="LowPairNs" />
+
+        <!--Create Input for HighNS -->
+        <label asp-for="HighPairNs">High Pair N/S</label>
+        <input asp-for="HighPairNs" />
+
+        <!--Create Input for BurialLocationNS -->
+        <select asp-for="BurialLocationNs">
+            <option value="N">North</option>
+            <option value="S">South</option>
+        </select><br />
+
+        <!--Create Input for LowEW -->
+        <label asp-for="LowPairEw">Low Pair E/W</label>
+        <input asp-for="LowPairEw" />
+
+        <!--Create Input for HighEw -->
+        <label asp-for="HighPairEw">High Pair E/W</label>
+        <input asp-for="HighPairEw" />
+
+        <!--Create Input for BurialLocationEW -->
+        <select asp-for="BurialLocationEw">
+            <option value="E">East</option>
+            <option value="W">West</option>
+        </select><br />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>

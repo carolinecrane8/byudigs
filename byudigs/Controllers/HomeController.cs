@@ -26,13 +26,14 @@ namespace byudigs.Controllers
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
-            
+            ViewBag.SelectedPlot = 0;
             ViewBag.Plots = _context.Plot;
+            ViewBag.Sublocation = _context.Sublocation;
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year)
+        public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo)
         {
             //This will grab the largest date id and increment it one to make sure that it is unique
             int dateid = _context.Date.Select(x => x.DateId).Max();
@@ -50,6 +51,7 @@ namespace byudigs.Controllers
 
             //This will grab the largest burial id
             int burialid = _context.Burial.Select(x => x.BurialId).Max();
+            burialid = burialid + 1;
             _context.Burial.Add(new Burial
             {
                 BurialId = burialid,
@@ -62,6 +64,7 @@ namespace byudigs.Controllers
                 //make this so that the plot info is passed in based on if a new one is created or not
                 PlotId = PlotInfo,
                 //add in sublocation id here
+                SublocationId = SublocationInfo,
                 DateId = dateid
             });
 
@@ -70,14 +73,32 @@ namespace byudigs.Controllers
             return View("BurialList", _context.Plot);
         }
 
+        [HttpGet]
+        public IActionResult AddNewPlot()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public IActionResult AddNewPlot(Plot p)
+        {
+            int plotid = _context.Plot.Select(x => x.PlotId).Max();
+            plotid = plotid + 1;
+            p.PlotId = plotid;
+            _context.Plot.Add(p);
+            _context.SaveChanges();
+            ViewBag.SelectedPlot = p.PlotId;
+            ViewBag.Plots = _context.Plot;
+            ViewBag.Sublocation = _context.Sublocation;
+            return View("AddBurialSimple");
+        }
+
+
         public IActionResult BurialList()
         {
             return View(_context.Plot);
         }
-        //public async Task<IActionResult> BurialList()
-        //{
-        //    return View(await _context.Plot.ToListAsync());
-        //}
+
 
         //DONT TOUCH THIS SECTION
         public IActionResult Index()
