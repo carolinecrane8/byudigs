@@ -26,6 +26,7 @@ namespace byudigs.Controllers
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
+            
             ViewBag.Plots = _context.Plot;
             return View();
         }
@@ -39,7 +40,6 @@ namespace byudigs.Controllers
             //string burialloactionew = p.BurialLocationEw;
             //int lowpairew = (int)p.LowPairEw;
             //int highpairew = (int)p.HighPairEw;
-            
             return View("BurialList", _context.Plot);
         }
 
