@@ -32,13 +32,40 @@ namespace byudigs.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddBurialSimple(Plot p,int PlotInfo)
+        public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year)
         {
-            //int lowpairns = (int)p.LowPairNs;
-            //int highpairns = (int)p.HighPairNs;
-            //string buriallocationns = p.BurialLocationNs;
-            //string burialloactionew = p.BurialLocationEw;
-            //int lowpairew = (int)p.LowPairEw;
+            //This will grab the largest date id and increment it one to make sure that it is unique
+            int dateid = _context.Date.Select(x => x.DateId).Max();
+            dateid = dateid + 1;
+
+            //This will add in the date into the date database
+            _context.Date.Add(new Date
+            {
+                DateId = dateid,
+                Month = month,
+                Day = day,
+                Year = year
+            }); ;
+            _context.SaveChanges();
+
+            //This will grab the largest burial id
+            int burialid = _context.Burial.Select(x => x.BurialId).Max();
+            _context.Burial.Add(new Burial
+            {
+                BurialId = burialid,
+                RackNum = b.RackNum,
+                BagNum = b.BagNum,
+                BurialNum = b.BurialNum,
+                BurialSubnum = b.BurialSubnum,
+                PreviouslySampled = b.PreviouslySampled,
+                Notes = b.Notes,
+                //make this so that the plot info is passed in based on if a new one is created or not
+                PlotId = PlotInfo,
+                //add in sublocation id here
+                DateId = dateid
+            });
+
+            _context.SaveChanges();
             //int highpairew = (int)p.HighPairEw;
             return View("BurialList", _context.Plot);
         }
