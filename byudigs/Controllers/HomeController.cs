@@ -21,6 +21,10 @@ namespace byudigs.Controllers
             _logger = logger;
             _context = context;
         }
+        //J.R.'s CONTROLLER PART
+
+
+
         //JAMIE's CONTROLLER PART
 
         [HttpGet]
