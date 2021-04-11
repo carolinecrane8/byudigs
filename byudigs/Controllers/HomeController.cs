@@ -1,4 +1,5 @@
 ﻿using byudigs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -26,7 +27,7 @@ namespace byudigs.Controllers
 
 
         //JAMIE's CONTROLLER PART
-
+        [Authorize(Roles ="SuperAdmin, Admin")]
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
@@ -35,7 +36,7 @@ namespace byudigs.Controllers
             ViewBag.Sublocation = _context.Sublocation;
             return View();
         }
-
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [HttpPost]
         public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo)
         {
@@ -105,20 +106,23 @@ namespace byudigs.Controllers
 
 
         //DONT TOUCH THIS SECTION
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
+        [AllowAnonymous]
         public IActionResult Tableau()
         {
             return View();
         }
-        
+        [AllowAnonymous]
+
         public IActionResult About()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
