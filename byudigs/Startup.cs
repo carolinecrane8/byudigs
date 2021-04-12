@@ -31,15 +31,16 @@ namespace byudigs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("ByuDigsDb"));
-            builder.UserID = Configuration["DbUser"];
-            builder.Password = Configuration["DbPassword"];
-            builder.InitialCatalog = "byu_digs";
-            builder.DataSource = "database-1.cfeuysvujco9.us-east-2.rds.amazonaws.com,1433";
+            //var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("ByuDigsDb"));
+            //builder.UserID = Configuration["DbUser"];
+            //builder.Password = Configuration["DbPassword"];
+            //builder.InitialCatalog = "byu_digs";
+            //builder.DataSource = "database-1.cfeuysvujco9.us-east-2.rds.amazonaws.com,1433";
+            //builder.DataSource = "aa1fwuwv40o8w63.cfeuysvujco9.us-east-2.rds.amazonaws.com:1433";
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             //ad context from scaffolding
-            services.AddDbContext<byu_digsContext>(options => options.UseSqlServer(builder.ConnectionString));
+            services.AddDbContext<byu_digsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ByuDigsDb")));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

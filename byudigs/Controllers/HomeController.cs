@@ -1,4 +1,5 @@
 ﻿using byudigs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -69,7 +70,7 @@ namespace byudigs.Controllers
             //int highpairew = (int)p.HighPairEw;
             return View("BurialList", _context.Plot);
         }
-
+        [AllowAnonymous]
         public IActionResult BurialList()
         {
             return View(_context.Plot);
@@ -80,10 +81,12 @@ namespace byudigs.Controllers
         //}
 
         //DONT TOUCH THIS SECTION
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
+
         public IActionResult Tableau()
         {
             return View();
