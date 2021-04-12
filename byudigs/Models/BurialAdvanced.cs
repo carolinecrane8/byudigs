@@ -10,6 +10,7 @@ namespace byudigs.Models
     public partial class BurialAdvanced
     {
         public int AdvancedId { get; set; }
+        //I made this b a string
         public int? BurialId { get; set; }
         public double? BurialDepth { get; set; }
         public int? SouthToHead { get; set; }

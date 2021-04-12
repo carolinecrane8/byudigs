@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Desert Shaft Burials";
+}
+
+@model byudigs.Models.ViewModels.BurialListViewModel
+
+<h1>@ViewData["Title"]</h1>
+
+<p>This should display all desert burial paginated information.</p>
+
+
+<div class="row">
+    <!--div here for the filtering categories-->
+    <div class="col-2">
+        <div class="border rounded p-1">
+
+            <form asp-action="Filter" method="post">
+
+                <!--different dropdowns or inputs-->
+                <div class="form-group">
+                    <label>Hair Color:</label>
+                    <select name="filter" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.HairColors, ViewBag.Filters.HairKey))">
+                        @*asp-items="@(new SelectList(ViewBag.HairColors, "BurialId", "HairColor", ViewBag.Filters.HairKey))">*@
+                        <option value="all">All</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <select name="filter" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.Genders, ViewBag.Filters.GenderKey))">
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                
+                    <div class="form-group">
+                        <label>Location:</label>
+                        <select name="filter" class="form-control"
+                                asp-items="@(new SelectList(ViewBag.Locations, ViewBag.Filters.LocationKey))">
+                            <option value="all">All</option>
+                        </select>
+                    </div>
+    
+                <div class="form-group">
+                    <label>Head Direction:</label>
+                    <select name="filter" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.HeadDirections, ViewBag.Filters.HeadDirectionKey))">
+                        <option value="all">All</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Preservation Index:</label>
+                    <select name="filter" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.PreservationIndexes, ViewBag.Filters.PreservationKey))">
+                        <option value="all">All</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-outline-info">Filter</button>
+
+                <a asp-action="DesertShaftBurials" asp-route-id="" class="btn btn-outline-info">Clear</a>
+
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="table-responsive col-10">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Location:</th>
+                    <th>Burial:</th>
+                    <th>Depth:</th>
+                    <th>Determined Gender:</th>
+                    <th>Artifact Found:</th>
+                    <th>Date Found:</th>
+                    <th>Explore:</th>
+                </tr>
+            </thead>
+            @foreach (var b in Model.Burials)
+            {
+                <tbody>
+                    <tr>
+                        <td class="align-middle">@b.SouthToFeet/@b.SouthToHead @b.VentralArc @b.LengthOfRemains/@b.BurialSituation @b.ArtifactFound @b.ArtifactsDescription</td>
+                        <td class="align-middle">@b.BasilarSuture</td>
+                        <td class="align-middle">@b.BurialDepth</td>
+                        <td class="align-middle">@b.GenderBodyCol</td>
+                        <td class="align-middle">
+                            @if (b.ArtifactFound is true)
+                            {
+                                <span>Yes</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }<br />
+                        </td>
+                        <td class="align-middle">
+                            @if (b.MonthFound is null & b.DayFound is null & b.YearFound is null)
+                            {
+                                <span>Unrecorded</span>
+                            }
+                            else
+                            {
+                                <span>@b.MonthFound @b.DayFound @b.YearFound</span>
+                            }<br />
+                        </td>
+                        <td class="align-middle">
+                            <form method="post" asp-action="DesertShaftBurialFull">
+                                <input id="BurialId" name="BurialId" type="hidden" value="@b.BurialId" />
+
+                                <button type="submit" class="btn btn-outline-info">Explore</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <!--small form to pass the burial id so that the full data can be accessed on the other page-->
+
+                </tbody>
+            }
+        </table>
+    </div>
+</div>
+
+<br />
+
+<!--paginated links-->
+<div page-info="@Model.PageNumberingInfo"
+     page-action="DesertShaftBurials"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-outline-secondary"
+     page-class-selected="btn-primary">
+</div>
+
+@*      page-url-teamname="@Model.HairColor" *@

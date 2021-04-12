@@ -1,4 +1,5 @@
 ﻿using byudigs.Models;
+using byudigs.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,8 @@ namespace byudigs.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private byu_digsContext _context { get; set; }
+
+        public int PageSize = 10;
 
         public HomeController(ILogger<HomeController> logger, byu_digsContext context)
         {
@@ -126,6 +129,74 @@ namespace byudigs.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult DesertShaftBurials(string? id, string? BurialId, int pageNum = 1)
+        {
+            var filters = new Filters(id);
+            //i made this thing BurialAdvanced instead of Burial, possible error here
+            //viewbags containing what will be inserted in the drop-down lists
+            ViewBag.Filters = filters;
+            ViewBag.HairColors = _context.BurialAdvanced.Select(b => b.HairColor).Distinct().ToList();
+            ViewBag.Genders = _context.BurialAdvanced.Select(b => b.GenderBodyCol).Distinct().ToList();
+            ViewBag.Locations = _context.BurialAdvanced.Select(b => b.BurialId).Distinct().ToList();
+            ViewBag.HeadDirections = _context.BurialAdvanced.Select(b => b.HeadDirection).Distinct().ToList();
+            ViewBag.PreservationIndexes = _context.BurialAdvanced.Select(b => b.PreservationIndex).Distinct().ToList();
+
+            //create iqueryable object to check parameters against
+            IQueryable<BurialAdvanced> query = _context.BurialAdvanced;
+            //.Include(b => b.HairColor).Include(b => b.GenderBodyCol).Include(b => b.BurialId).Include(b => b.HeadDirection).Include(b => b.PreservationIndex);
+
+            //create queries based on what parameters are passed and add them to the query object
+            if (filters.HasHair)
+            {
+                query = query.Where(b => b.HairColor == filters.HairKey);
+            }
+            if (filters.HasGender)
+            {
+                query = query.Where(b => b.GenderBodyCol == filters.GenderKey);
+            }
+            if (filters.HasLocation)
+            {
+                query = query.Where(b => b.BurialId.ToString() == filters.LocationKey);
+            }
+            if (filters.HasHeadDirection)
+            {
+                query = query.Where(b => b.HeadDirection == filters.HeadDirectionKey);
+            }
+            if (filters.HasPreservationIndex)
+            {
+                query = query.Where(b => b.PreservationIndex == filters.PreservationKey);
+            }
+
+            //create burials list for filtered list and pass it to the view
+            var burials = query
+                .OrderBy(b => b.BurialId)
+                .Skip((pageNum - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            //pass all current main database entries and paging info to the desert burials page
+            return View(new BurialListViewModel
+            {
+                //add burials object (query object with pagination set up) to view model
+                Burials = burials,
+                PageNumberingInfo = new PageNumberingInfo
+                {
+                    CurrentPage = pageNum,
+                    NumItemsPerPage = PageSize,
+                    TotalNumItems = query.Count()
+                    //TotalNumItems = (burialId == null ? _repository.Burials.Count() :
+                    //    _repository.Burials.Where(b => b.BurialId == burialId).Count())
+                }
+            }
+            );
+        }
+
+                public IActionResult Filter(string[] filter)
+        {
+            string id = string.Join('-', filter);
+            return RedirectToAction("DesertShaftBurials", new { ID = id });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
