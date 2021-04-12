@@ -1,4 +1,5 @@
 ﻿using byudigs.Models;
+using byudigs.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,12 +23,9 @@ namespace byudigs.Controllers
             _logger = logger;
             _context = context;
         }
-        //J.R.'s CONTROLLER PART
-
-
 
         //JAMIE's CONTROLLER PART
-        [Authorize(Roles ="SuperAdmin, Admin")]
+        //[Authorize(Roles ="SuperAdmin, Admin")]
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
@@ -36,7 +34,7 @@ namespace byudigs.Controllers
             ViewBag.Sublocation = _context.Sublocation;
             return View();
         }
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        //[Authorize(Roles = "SuperAdmin, Admin")]
         [HttpPost]
         public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo,int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth)
         {
@@ -114,7 +112,32 @@ namespace byudigs.Controllers
 
         public IActionResult BurialList()
         {
-            return View(_context.Plot);
+            ViewBag.Burial = _context.Burial;
+            ViewBag.BurialAdvanced = _context.BurialAdvanced;
+            ViewBag.Sublocation = _context.Sublocation;
+            ViewBag.Date = _context.Date;
+            //var burials = _context.BurialAdvanced.FromSqlRaw("SELECT * from burial_advanced ba join burial b on ba.burial_id = b.burial_id join plot p on b.plot_id = p.plot_id join sublocation s on b.sublocation_id = s.sublocation_id");
+            List<Burial> burial = _context.Burial.ToList();
+            List<Plot> plot = _context.Plot.ToList();
+            List<Sublocation> sublocation = _context.Sublocation.ToList();
+            List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.ToList();
+
+            var burialRecord = from ba in burialadvanced
+                               join b in burial on ba.BurialId equals b.BurialId into table1
+                               from b in table1.ToList()
+                               join p in plot on b.PlotId equals p.PlotId into table2
+                               from p in table2.ToList()
+                               join s in sublocation on b.SublocationId equals s.SublocationId into table3
+                               from s in table3.ToList()
+                               select new ViewModel
+                               {
+                                   burial = b,
+                                   burialadvanced = ba,
+                                   plot = p,
+                                   sublocation = s
+                               };
+
+            return View(burialRecord);
         }
 
 
