@@ -13,7 +13,7 @@ namespace byudigs.Models
         {
             Burial = new HashSet<Burial>();
         }
-
+        
         public int PlotId { get; set; }
         public int? LowPairNs { get; set; }
         public int? HighPairNs { get; set; }
