@@ -1,3 +1,5 @@
+BYU Information Systems Junior Core Group 2-7
+
 Application:
 *C# 
 *ASP.NET Core web app 
