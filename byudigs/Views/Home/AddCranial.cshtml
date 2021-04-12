@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model byudigs.Models.Cranial
+
+<form method="post" asp-action="AddCranial">
+    <!--Create Input for BurialSubNum -->
+    <label asp-for="TubeNum">Tube Number</label>
+    <input asp-for="TubeNum" />
+
+    <!--Create Input for RackNum -->
+    <label asp-for="Description">Description</label>
+    <input asp-for="Description" />
+
+    <!--Create Input for BagNum -->
+    <label asp-for="SizeMl">SizeMl</label>
+    <input asp-for="SizeMl" />
+
+    <!--Create Input for BurialSubNum -->
+    <label asp-for="Foci">Foci</label>
+    <input asp-for="Foci" />
+
+    <!--Create Input for BagNum -->
+    <label asp-for="C14Sample2017">C14Sample2017</label>
+    <input asp-for="C14Sample2017" />
+
+    <!--Create Input for BurialSubNum -->
+    <label asp-for="Location">Location</label>
+    <input asp-for="Location" />
+
+    <!--Create Input for BagNum -->
+    <label asp-for="Question">Question</label>
+    <input asp-for="Question" />
+
+    <!--Create Input for BurialSubNum -->
+    <label asp-for="Conventional14cAgeBp">Conventional14cAgeBp</label>
+    <input asp-for="Conventional14cAgeBp" />
+
+    <!--Create Input for BagNum -->
+    <label asp-for="Calibrated95CalendarDateMax">Calibrated95CalendarDateMax</label>
+    <input asp-for="Calibrated95CalendarDateMax" />
+
+    <!--Create Input for BurialSubNum -->
+    <label asp-for="Calibrated95CalendarDateMin">Calibrated95CalendarDateMin</label>
+    <input asp-for="Calibrated95CalendarDateMin" />
+
+    <!--Create Input for BagNum -->
+    <label asp-for="Calibrated95CalendarDateSpan">Calibrated95CalendarDateSpan</label>
+    <input asp-for="Calibrated95CalendarDateSpan" />
+
+    <label asp-for="Category">Category</label>
+    <input asp-for="Category" />
+
+    <label asp-for="LabNotes">Lab Notes</label>
+    <input asp-for="LabNotes" />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +27,7 @@ namespace byudigs.Controllers
 
         //JAMIE's CONTROLLER PART
         //[Authorize(Roles ="SuperAdmin, Admin")]
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
@@ -35,6 +37,7 @@ namespace byudigs.Controllers
             return View();
         }
         //[Authorize(Roles = "SuperAdmin, Admin")]
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo,int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth)
         {
@@ -77,6 +80,7 @@ namespace byudigs.Controllers
             _context.BurialAdvanced.Add(new BurialAdvanced
             {
                 AdvancedId = advancedid,
+                BurialId = burialid,
                 SouthToFeet = SouthToFeet,
                 SouthToHead = SouthToFeet,
                 EastToFeet = WestToFeet,
@@ -84,11 +88,17 @@ namespace byudigs.Controllers
                 BurialDepth = Depth,
                 LengthOfRemains = Length
             });
+
+            int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
+            var updatecranial = _context.Cranial.Where(x => x.CranialId == cranialid).FirstOrDefault();
+            updatecranial.BurialId = burialid;
+
             _context.SaveChanges();
             //int highpairew = (int)p.HighPairEw;
             return View("BurialList", _context.Plot);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult AddNewPlot()
         {
@@ -96,6 +106,7 @@ namespace byudigs.Controllers
         }
         
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult AddNewPlot(Plot p)
         {
             int plotid = _context.Plot.Select(x => x.PlotId).Max();
@@ -109,20 +120,77 @@ namespace byudigs.Controllers
             return View("AddBurialSimple");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AddBurialAdvanced()
+        {
+            return View();
+        }
 
-        public IActionResult BurialList()
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult AddBurialAdvanced(BurialAdvanced ba)
+        {
+            int plotid = _context.Plot.Select(x => x.PlotId).Max();
+
+            return View("AddBurialSimple");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AddCranial()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult AddCranial(Cranial c)
+        {
+            int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
+            cranialid = cranialid + 1;
+            ViewBag.SelectedPlot = 0;
+            ViewBag.Plots = _context.Plot;
+            ViewBag.Sublocation = _context.Sublocation;
+            _context.Cranial.Add(new Cranial
+            {
+                CranialId = cranialid,
+                BurialId = null,
+                TubeNum = c.TubeNum,
+                Description = c.Description,
+                SizeMl = c.SizeMl,
+                Foci = c.Foci,
+                C14Sample2017 = c.C14Sample2017,
+                Location = c.Location,
+                Question = c.Question,
+                Conventional14cAgeBp = c.Conventional14cAgeBp,
+                _14cCalendarDate = c._14cCalendarDate,
+                Calibrated95CalendarDateMax = c.Calibrated95CalendarDateMax,
+                Calibrated95CalendarDateMin = c.Calibrated95CalendarDateMin,
+                Calibrated95CalendarDateAvg = c.Calibrated95CalendarDateAvg,
+                Calibrated95CalendarDateSpan = c.Calibrated95CalendarDateSpan,
+                Category = c.Category,
+                LabNotes = c.LabNotes
+            });
+            _context.SaveChanges();
+            return View("AddBurialSimple");
+        }
+
+        [AllowAnonymous]
+        public IActionResult BurialList(string searchString)
         {
             ViewBag.Burial = _context.Burial;
             ViewBag.BurialAdvanced = _context.BurialAdvanced;
             ViewBag.Sublocation = _context.Sublocation;
             ViewBag.Date = _context.Date;
             //var burials = _context.BurialAdvanced.FromSqlRaw("SELECT * from burial_advanced ba join burial b on ba.burial_id = b.burial_id join plot p on b.plot_id = p.plot_id join sublocation s on b.sublocation_id = s.sublocation_id");
-            List<Burial> burial = _context.Burial.ToList();
-            List<Plot> plot = _context.Plot.ToList();
-            List<Sublocation> sublocation = _context.Sublocation.ToList();
-            List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.ToList();
+           
 
-            var burialRecord = from ba in burialadvanced
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                List<Burial> burial = _context.Burial.ToList();
+                List<Plot> plot = _context.Plot.ToList();
+                List<Sublocation> sublocation = _context.Sublocation.ToList();
+                List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.Where(x => x.HairColor.Contains(searchString)).ToList();
+               var burialRecord = from ba in burialadvanced
                                join b in burial on ba.BurialId equals b.BurialId into table1
                                from b in table1.ToList()
                                join p in plot on b.PlotId equals p.PlotId into table2
@@ -136,8 +204,33 @@ namespace byudigs.Controllers
                                    plot = p,
                                    sublocation = s
                                };
+                return View(burialRecord);
+            }
+            else
+            {
+                List<Burial> burial = _context.Burial.ToList();
+                List<Plot> plot = _context.Plot.ToList();
+                List<Sublocation> sublocation = _context.Sublocation.ToList();
+                List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.ToList();
 
-            return View(burialRecord);
+                var burialRecord = from ba in burialadvanced
+                                   join b in burial on ba.BurialId equals b.BurialId into table1
+                                   from b in table1.ToList()
+                                   join p in plot on b.PlotId equals p.PlotId into table2
+                                   from p in table2.ToList()
+                                   join s in sublocation on b.SublocationId equals s.SublocationId into table3
+                                   from s in table3.ToList()
+                                   select new ViewModel
+                                   {
+                                       burial = b,
+                                       burialadvanced = ba,
+                                       plot = p,
+                                       sublocation = s
+                                   };
+                return View(burialRecord);
+            }
+            
+            //return View(burialRecord.ToList());
         }
 
 

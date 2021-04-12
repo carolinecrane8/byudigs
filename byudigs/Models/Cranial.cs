@@ -10,7 +10,7 @@ namespace byudigs.Models
     public partial class Cranial
     {
         public int CranialId { get; set; }
-        public int BurialId { get; set; }
+        public int? BurialId { get; set; }
         public int? TubeNum { get; set; }
         public string Description { get; set; }
         public int? SizeMl { get; set; }
