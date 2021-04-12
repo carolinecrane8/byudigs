@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Nest;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -146,9 +147,13 @@ namespace byudigs.Controllers
         {
             int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
             cranialid = cranialid + 1;
+            ViewBag.SelectedPlot = 0;
+            ViewBag.Plots = _context.Plot;
+            ViewBag.Sublocation = _context.Sublocation;
             _context.Cranial.Add(new Cranial
             {
                 CranialId = cranialid,
+                BurialId = null,
                 TubeNum = c.TubeNum,
                 Description = c.Description,
                 SizeMl = c.SizeMl,
@@ -170,19 +175,22 @@ namespace byudigs.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult BurialList()
+        public IActionResult BurialList(string searchString)
         {
             ViewBag.Burial = _context.Burial;
             ViewBag.BurialAdvanced = _context.BurialAdvanced;
             ViewBag.Sublocation = _context.Sublocation;
             ViewBag.Date = _context.Date;
             //var burials = _context.BurialAdvanced.FromSqlRaw("SELECT * from burial_advanced ba join burial b on ba.burial_id = b.burial_id join plot p on b.plot_id = p.plot_id join sublocation s on b.sublocation_id = s.sublocation_id");
-            List<Burial> burial = _context.Burial.ToList();
-            List<Plot> plot = _context.Plot.ToList();
-            List<Sublocation> sublocation = _context.Sublocation.ToList();
-            List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.ToList();
+           
 
-            var burialRecord = from ba in burialadvanced
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                List<Burial> burial = _context.Burial.ToList();
+                List<Plot> plot = _context.Plot.ToList();
+                List<Sublocation> sublocation = _context.Sublocation.ToList();
+                List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.Where(x => x.HairColor.Contains(searchString)).ToList();
+               var burialRecord = from ba in burialadvanced
                                join b in burial on ba.BurialId equals b.BurialId into table1
                                from b in table1.ToList()
                                join p in plot on b.PlotId equals p.PlotId into table2
@@ -196,8 +204,33 @@ namespace byudigs.Controllers
                                    plot = p,
                                    sublocation = s
                                };
+                return View(burialRecord);
+            }
+            else
+            {
+                List<Burial> burial = _context.Burial.ToList();
+                List<Plot> plot = _context.Plot.ToList();
+                List<Sublocation> sublocation = _context.Sublocation.ToList();
+                List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.ToList();
 
-            return View(burialRecord);
+                var burialRecord = from ba in burialadvanced
+                                   join b in burial on ba.BurialId equals b.BurialId into table1
+                                   from b in table1.ToList()
+                                   join p in plot on b.PlotId equals p.PlotId into table2
+                                   from p in table2.ToList()
+                                   join s in sublocation on b.SublocationId equals s.SublocationId into table3
+                                   from s in table3.ToList()
+                                   select new ViewModel
+                                   {
+                                       burial = b,
+                                       burialadvanced = ba,
+                                       plot = p,
+                                       sublocation = s
+                                   };
+                return View(burialRecord);
+            }
+            
+            //return View(burialRecord.ToList());
         }
 
 

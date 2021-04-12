@@ -4,42 +4,60 @@
 @{
 }
 @model byudigs.Models.Plot
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <form method="post" asp-action="AddNewPlot">
-        <!--Create Input for LowNS -->
-        <label asp-for="LowPairNs">Low Pair N/S</label>
-        <input asp-for="LowPairNs" />
+<link href="~/css/Form.css" rel="stylesheet" />
+<link href=“//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css” rel=“stylesheet” id=“bootstrap-css”>
+<script src=“//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js”></script>
+<script src=“//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js”></script>
+<link href=“https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css” rel=“stylesheet”>
+<link rel=“stylesheet” href=“https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css”>
+<link rel=“stylesheet” href=“assets/css/style.css”>
+<link href="~/css/Form.css" rel="stylesheet" />
 
-        <!--Create Input for HighNS -->
-        <label asp-for="HighPairNs">High Pair N/S</label>
-        <input asp-for="HighPairNs" />
-
-        <!--Create Input for BurialLocationNS -->
-        <select asp-for="BurialLocationNs">
-            <option value="N">North</option>
-            <option value="S">South</option>
-        </select><br />
-
-        <!--Create Input for LowEW -->
-        <label asp-for="LowPairEw">Low Pair E/W</label>
-        <input asp-for="LowPairEw" />
-
-        <!--Create Input for HighEw -->
-        <label asp-for="HighPairEw">High Pair E/W</label>
-        <input asp-for="HighPairEw" />
-
-        <!--Create Input for BurialLocationEW -->
-        <select asp-for="BurialLocationEw">
-            <option value="E">East</option>
-            <option value="W">West</option>
-        </select><br />
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+<br />
+<br />
+<section class="get-in-touch">
+    <div class="registration-form">
+        <h1 class="title">New Burial Location</h1>
+        <form method="post" asp-action="AddNewPlot">
+            <div class="form-field col-lg-6">
+                <!--Create Input for LowNS -->
+                <label asp-for="LowPairNs">Low Pair N/S</label>
+                <input asp-for="LowPairNs" />
+            </div><br />
+            <div class="form-field col-lg-6">
+                <!--Create Input for HighNS -->
+                <label asp-for="HighPairNs">High Pair N/S</label>
+                <input asp-for="HighPairNs" />
+            </div><br />
+            <div class="form-field col-lg-6">
+                <!--Create Input for BurialLocationNS -->
+                <label asp-for="BurialLocationNs">Burial Location N or S</label>
+                <select asp-for="BurialLocationNs">
+                    <option value="N">North</option>
+                    <option value="S">South</option>
+                </select><br />
+            </div><br />
+            <div class="form-field col-lg-6">
+                <!--Create Input for LowEW -->
+                <label asp-for="LowPairEw">Low Pair E/W</label>
+                <input asp-for="LowPairEw" />
+            </div><br />
+            <div class="form-field col-lg-6">
+                <!--Create Input for HighEw -->
+                <label asp-for="HighPairEw">High Pair E/W</label>
+                <input asp-for="HighPairEw" />
+            </div><br />
+            <div class="form-field col-lg-6">
+                <!--Create Input for BurialLocationEW -->
+                <label asp-for="BurialLocationEw">Burial Location E or W</label>
+                <select asp-for="BurialLocationEw">
+                    <option value="E">East</option>
+                    <option value="W">West</option>
+                </select><br />
+            </div><br />
+            <div class="form-field col-lg-6">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    </section>

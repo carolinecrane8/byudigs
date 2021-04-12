@@ -1,13 +1,16 @@
 ﻿
 @model IEnumerable<byudigs.Models.ViewModels.ViewModel>
 
+   <br /><br /><br /><br /><br /><br /><br />
+
+ <input name="searchString" />
 
 @foreach (var x in Model)
     {
         <div class="card card-outline-primary m-1 p-1">
             <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
                 <h4>
-                    @x.burial.BurialNum @x.plot.BurialLocationNs @x.plot.LowPairNs/@x.plot.HighPairNs @x.plot.BurialLocationEw @x.plot.LowPairEw/@x.plot.HighPairEw @x.sublocation.Direction #@x.burial.BurialNum @x.burial.BurialSubnum
+                   @x.burialadvanced.HairColor @x.burial.BurialNum @x.plot.BurialLocationNs @x.plot.LowPairNs/@x.plot.HighPairNs @x.plot.BurialLocationEw @x.plot.LowPairEw/@x.plot.HighPairEw @x.sublocation.Direction #@x.burial.BurialNum @x.burial.BurialSubnum
                 </h4>
             </a>
             <!--Made a collapsable pill so that all the information is not instantly clicked on but it can be seen if you click on one to open-->
