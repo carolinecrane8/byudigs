@@ -26,6 +26,7 @@ namespace byudigs.Controllers
 
         //JAMIE's CONTROLLER PART
         //[Authorize(Roles ="SuperAdmin, Admin")]
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
@@ -35,6 +36,7 @@ namespace byudigs.Controllers
             return View();
         }
         //[Authorize(Roles = "SuperAdmin, Admin")]
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo,int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth)
         {
@@ -77,6 +79,7 @@ namespace byudigs.Controllers
             _context.BurialAdvanced.Add(new BurialAdvanced
             {
                 AdvancedId = advancedid,
+                BurialId = burialid,
                 SouthToFeet = SouthToFeet,
                 SouthToHead = SouthToFeet,
                 EastToFeet = WestToFeet,
@@ -84,11 +87,17 @@ namespace byudigs.Controllers
                 BurialDepth = Depth,
                 LengthOfRemains = Length
             });
+
+            int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
+            var updatecranial = _context.Cranial.Where(x => x.CranialId == cranialid).FirstOrDefault();
+            updatecranial.BurialId = burialid;
+
             _context.SaveChanges();
             //int highpairew = (int)p.HighPairEw;
             return View("BurialList", _context.Plot);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult AddNewPlot()
         {
@@ -96,6 +105,7 @@ namespace byudigs.Controllers
         }
         
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult AddNewPlot(Plot p)
         {
             int plotid = _context.Plot.Select(x => x.PlotId).Max();
@@ -109,7 +119,57 @@ namespace byudigs.Controllers
             return View("AddBurialSimple");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AddBurialAdvanced()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult AddBurialAdvanced(BurialAdvanced ba)
+        {
+            int plotid = _context.Plot.Select(x => x.PlotId).Max();
+
+            return View("AddBurialSimple");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AddCranial()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult AddCranial(Cranial c)
+        {
+            int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
+            cranialid = cranialid + 1;
+            _context.Cranial.Add(new Cranial
+            {
+                CranialId = cranialid,
+                TubeNum = c.TubeNum,
+                Description = c.Description,
+                SizeMl = c.SizeMl,
+                Foci = c.Foci,
+                C14Sample2017 = c.C14Sample2017,
+                Location = c.Location,
+                Question = c.Question,
+                Conventional14cAgeBp = c.Conventional14cAgeBp,
+                _14cCalendarDate = c._14cCalendarDate,
+                Calibrated95CalendarDateMax = c.Calibrated95CalendarDateMax,
+                Calibrated95CalendarDateMin = c.Calibrated95CalendarDateMin,
+                Calibrated95CalendarDateAvg = c.Calibrated95CalendarDateAvg,
+                Calibrated95CalendarDateSpan = c.Calibrated95CalendarDateSpan,
+                Category = c.Category,
+                LabNotes = c.LabNotes
+            });
+            _context.SaveChanges();
+            return View("AddBurialSimple");
+        }
+
+        [AllowAnonymous]
         public IActionResult BurialList()
         {
             ViewBag.Burial = _context.Burial;

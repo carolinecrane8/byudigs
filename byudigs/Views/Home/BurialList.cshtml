@@ -1,7 +1,7 @@
 ﻿
 @model IEnumerable<byudigs.Models.ViewModels.ViewModel>
 
-<html>
+
 @foreach (var x in Model)
     {
         <div class="card card-outline-primary m-1 p-1">
@@ -16,21 +16,36 @@
                     <!--MAke this collapsable so that you have to have the inforamtion appear by clicking on the time title-->
                     <div class="collapse multi-collapse" id="multiCollapseExample1">
                         <div class="card card-body">
-                            South to Head: @x.burialadvanced.SouthToHead <br />
-                            South to Feet: @x.burialadvanced.SouthToFeet <br />
-                            West To Head: @x.burialadvanced.EastToHead <br />
-                            West to Feet: @x.burialadvanced.EastToFeet <br />
-                            Length: @x.burialadvanced.LengthOfRemains <br />
-                            Depth: @x.burialadvanced.BurialDepth <br />
+                            @if (x.burialadvanced.SouthToHead != null)
+                            {
+                                <div>South to Head: @x.burialadvanced.SouthToHead<br /></div>
+                            }
+                            @if (x.burialadvanced.SouthToFeet != null)
+                            {
+                                <div>South to Feet: @x.burialadvanced.SouthToFeet <br /></div>
+                            }
+                            @if (x.burialadvanced.EastToHead != null)
+                            {
+                                <div>West To Head: @x.burialadvanced.EastToHead <br /></div>
+                            }
+                            @if (x.burialadvanced.EastToFeet != null)
+                            {
+                                <div>West to Feet: @x.burialadvanced.EastToFeet <br /></div>
+                            }
+                            @if (x.burialadvanced.LengthOfRemains != null)
+                            {
+                                <div>Length: @x.burialadvanced.LengthOfRemains <br /></div>
+
+                            }
+                            @if (x.burialadvanced.BurialDepth != null)
+                            {
+                                <div>Depth: @x.burialadvanced.BurialDepth <br /></div>
+                            }
+
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
-    
+    </div>
+            </div>
 }
 
-
-
-
-</html>
