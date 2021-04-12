@@ -5,132 +5,143 @@
 }
 @model byudigs.Models.Burial
 
-
-<section class="about-section text-center" id="about">
-    <div class="container">
-        <div class="row">
-
-        </div>
-        <img class="img-fluid" src="assets/img/ipad.png" alt="" />
-    </div>
-</section>
-
-<fieldset>
-    <!--Create a form that will pull new movie information-->
-    <form method="post" asp-action="AddBurialSimple">
-        <select id="PlotInfo" name="PlotInfo">
-            <option value="">Select One</option>
-            @foreach (var plot in ViewBag.Plots)
-            {
-                @if (plot.PlotId != 1)
+<!--Create a form that will pull new movie information-->
+<br /><br /><br /><br /><br /><br /><br /><br />
+        <form method="post" asp-action="AddBurialSimple">
+            <select id="PlotInfo" name="PlotInfo">
+                <option value="">Select One</option>
+                @foreach (var plot in ViewBag.Plots)
                 {
-                    <option value="@plot.PlotId">@plot.BurialLocationNs @plot.LowPairNs/@plot.HighPairNs @plot.BurialLocationEw @plot.LowPairNs/@plot.HighPairEw</option>
+                    @if (plot.PlotId != 1)
+                    {
+                        @if (plot.PlotId == ViewBag.SelectedPlot)
+                        {
+                            <option value="@plot.PlotId" selected>@plot.BurialLocationNs @plot.LowPairNs/@plot.HighPairNs @plot.BurialLocationEw @plot.LowPairEw/@plot.HighPairEw</option>
+                        }
+                        else
+                        {
+                            <option value="@plot.PlotId">@plot.BurialLocationNs @plot.LowPairNs/@plot.HighPairNs @plot.BurialLocationEw @plot.LowPairEw/@plot.HighPairEw</option>
+                        }
+                    }
                 }
-            }
+            </select><br />
+                     <select id="SublocationInfo" name="SublocationInfo">
+                         <option value="">Select One</option>
+                         @foreach (var sublocation in ViewBag.Sublocation)
+                         {
+                             @if (sublocation.Area == null)
+                             {
+                                 @if (sublocation.SublocationId != 1)
+                                 {
+                                     <option value="@sublocation.SublocationId">@sublocation.Direction</option>
+                                 }
 
-        </select><br />
-        <label>Month</label>
-        <select id="month" name="month">
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-        </select><br />
-        <label>Day</label>
-        <select id="day" name="day">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-            <option value="13">13</option>
-            <option value="14">14</option>
-            <option value="15">15</option>
-            <option value="16">16</option>
-            <option value="17">17</option>
-            <option value="18">18</option>
-            <option value="19">19</option>
-            <option value="20">20</option>
-            <option value="21">21</option>
-            <option value="22">22</option>
-            <option value="23">23</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
-            <option value="26">26</option>
-            <option value="27">27</option>
-            <option value="28">28</option>
-            <option value="29">29</option>
-            <option value="30">30</option>
-            <option value="31">31</option>
-        </select><br />
+                             }
 
-        <label>Year</label>
-        <input name="year" /><br />
+                         }
 
-        <!--Create Input for BurialNum -->
-        <label asp-for="BurialNum">Burial Number</label>
-        <input asp-for="BurialNum" />
+                     </select><br />
+            <a asp-action="AddNewPlot">Add a new location</a>
+            <label>Month</label>
+            <select id="month" name="month">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select><br />
+            <label>Day</label>
+            <select id="day" name="day">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select><br />
 
-        <!--Create Input for BurialSubNum -->
-        <label asp-for="BurialSubnum">Burial Subnumber</label>
-        <input asp-for="BurialSubnum" />
+            <label>Year</label>
+            <input name="year" /><br />
 
-        <!--Create Input for SouthToHead -->
-        <label name="SouthToHead">South to Head</label>
-        <input name="SouthToHead" /><br />
+            <!--Create Input for BurialNum -->
+            <label asp-for="BurialNum">Burial Number</label>
+            <input asp-for="BurialNum" />
 
-        <!--Create Input for SouthToFeet -->
-        <label name="SouthToFeet">South To Feet</label>
-        <input name="SouthToFeet" />
+            <!--Create Input for BurialSubNum -->
+            <label asp-for="BurialSubnum">Burial Subnumber</label>
+            <input asp-for="BurialSubnum" />
 
-        <!--Create Input for WestToHead -->
-        <label name="WestToHead">West to Head</label>
-        <input name="WestToHead" /><br />
+            <!--Create Input for SouthToHead -->
+            <label name="SouthToHead">South to Head</label>
+            <input name="SouthToHead" /><br />
 
-        <!--Create Input for WestToFeet -->
-        <label name="WestToFeet">West to Feet</label>
-        <input name="WestToFeet" /><br />
+            <!--Create Input for SouthToFeet -->
+            <label name="SouthToFeet">South To Feet</label>
+            <input name="SouthToFeet" />
 
-        <!--Create Input for Length -->
-        <label name="Length">Length</label>
-        <input name="Length" /><br />
+            <!--Create Input for WestToHead -->
+            <label name="WestToHead">West to Head</label>
+            <input name="WestToHead" /><br />
 
-        <!--Create Input for Depth -->
-        <label name="Depth">Depth</label>
-        <input name="Depth" /><br />
+            <!--Create Input for WestToFeet -->
+            <label name="WestToFeet">West to Feet</label>
+            <input name="WestToFeet" /><br />
 
-        <!--Create Input for BurialSubNum -->
-        <label asp-for="Notes">Notes</label>
-        <input asp-for="Notes" />
+            <!--Create Input for Length -->
+            <label name="Length">Length</label>
+            <input name="Length" /><br />
 
-        <!--Create Input for RackNum -->
-        <label asp-for="RackNum">Rack Number</label>
-        <input asp-for="RackNum" />
+            <!--Create Input for Depth -->
+            <label name="Depth">Depth</label>
+            <input name="Depth" /><br />
 
-        <!--Create Input for BagNum -->
-        <label asp-for="BagNum">Bag Number</label>
-        <input asp-for="BagNum" />
+            <!--Create Input for BurialSubNum -->
+            <label asp-for="Notes">Notes</label>
+            <input asp-for="Notes" />
 
-        <!--Create Input for BurialSubNum -->
-        <label asp-for="PreviouslySampled">Was this burial previously sampled?</label>
-        <input asp-for="PreviouslySampled" />
+            <!--Create Input for RackNum -->
+            <label asp-for="RackNum">Rack Number</label>
+            <input asp-for="RackNum" />
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</fieldset>
+            <!--Create Input for BagNum -->
+            <label asp-for="BagNum">Bag Number</label>
+            <input asp-for="BagNum" />
 
+            <!--Create Input for BurialSubNum -->
+            <label asp-for="PreviouslySampled">Was this burial previously sampled?</label>
+            <input asp-for="PreviouslySampled" />
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
