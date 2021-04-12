@@ -1,0 +1,26 @@
+﻿@model SavePhotosViewModel
+
+<div class="row justify-content-center">
+    <div class="col col-6">
+        <form method="post" asp-action="SavePhotos" enctype="multipart/form-data">
+            <input type="hidden" id="BurialId" name="BurialId" value="@Model.Burial.BurialId" />
+
+            <label asp-for="PhotoFile">Upload Photo</label>
+            <select asp-for="Type" class="form-control">
+
+                <option value="Photo" selected>
+                    Photo
+                </option>
+                <option value="Bonebooks">
+                    Bone Book
+                </option>
+                <option value="Field Notes">
+                    Field Notes
+                </option>
+            </select>
+
+            <button class="btn btn-primary" type="submit">Save Photo</button>
+        </form>
+        <div asp-validation-summary="All"></div>
+    </div>
+</div>

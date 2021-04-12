@@ -1,10 +1,12 @@
 ﻿using byudigs.Models;
+using byudigs.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,8 +24,6 @@ namespace byudigs.Controllers
             _context = context;
         }
         //J.R.'s CONTROLLER PART
-
-
 
         //JAMIE's CONTROLLER PART
 

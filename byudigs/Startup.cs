@@ -1,6 +1,8 @@
+using Amazon.S3;
 using byudigs.Data;
 using byudigs.Models;
 using byudigs.MVC.Permission;
+using byudigs.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,6 +53,8 @@ namespace byudigs
             .AddDefaultTokenProviders();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSingleton<IStorageService, S3StorageService>();
+            services.AddAWSService<IAmazonS3>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
