@@ -1,54 +1,63 @@
 ﻿
 @model IEnumerable<byudigs.Models.ViewModels.ViewModel>
 
-   <br /><br /><br /><br /><br /><br /><br />
-
- <input name="searchString" />
-
-@foreach (var x in Model)
-    {
-        <div class="card card-outline-primary m-1 p-1">
-            <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
-                <h4>
-                   @x.burialadvanced.HairColor @x.burial.BurialNum @x.plot.BurialLocationNs @x.plot.LowPairNs/@x.plot.HighPairNs @x.plot.BurialLocationEw @x.plot.LowPairEw/@x.plot.HighPairEw @x.sublocation.Direction #@x.burial.BurialNum @x.burial.BurialSubnum
-                </h4>
+<link href="~/css/Table.css" rel="stylesheet" />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="container py-5">
+    @*<header class="text-center text-white">
+        <h1 class="display-4">Bootstrap Datatables</h1>
+        <p class="lead mb-0">
+            Using Bootstrap 4 and <a href="https://datatables.net/examples/styling/bootstrap4.html" class="text-white font-italic">
+                <u>Datatables</u>
+            </a>, add interaction controlsto your HTML tables.
+        </p>
+        <p class="font-italic">
+            Snippet By
+            <a href="https://bootstrapious.com" class="text-white">
+                <u>Bootstrapious</u>
             </a>
-            <!--Made a collapsable pill so that all the information is not instantly clicked on but it can be seen if you click on one to open-->
-            <div class="row">
-                <div class="col">
-                    <!--MAke this collapsable so that you have to have the inforamtion appear by clicking on the time title-->
-                    <div class="collapse multi-collapse" id="multiCollapseExample1">
-                        <div class="card card-body">
-                            @if (x.burialadvanced.SouthToHead != null)
-                            {
-                                <div>South to Head: @x.burialadvanced.SouthToHead<br /></div>
-                            }
-                            @if (x.burialadvanced.SouthToFeet != null)
-                            {
-                                <div>South to Feet: @x.burialadvanced.SouthToFeet <br /></div>
-                            }
-                            @if (x.burialadvanced.EastToHead != null)
-                            {
-                                <div>West To Head: @x.burialadvanced.EastToHead <br /></div>
-                            }
-                            @if (x.burialadvanced.EastToFeet != null)
-                            {
-                                <div>West to Feet: @x.burialadvanced.EastToFeet <br /></div>
-                            }
-                            @if (x.burialadvanced.LengthOfRemains != null)
-                            {
-                                <div>Length: @x.burialadvanced.LengthOfRemains <br /></div>
+        </p>
+    </header>*@
+    @*<input name="searchString" />*@
+    <div class="row py-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="card rounded shadow border-0">
+                <div class="card-body p-5 bg-white rounded">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <!--This is creating the headers of the table-->
+                                    <th style="padding-left:8px; padding-right:8px;">Location:</th>
+                                    <th style="padding-left:8px; padding-right:8px;">South to Head:</th>
+                                    <th style="padding-left:8px; padding-right:8px;">South to Feet:</th>
+                                    <th style="padding-left:8px; padding-right:8px;">East to Head:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var x in Model)
+                                {
+                                    <tr>
+                                        <!--This is assigning the model variables to the list so that it can be seen in this view-->
+                                        <td style="padding-left:8px; padding-right:8px;"> @x.burialadvanced.HairColor @x.burial.BurialNum @x.plot.BurialLocationNs @x.plot.LowPairNs/@x.plot.HighPairNs @x.plot.BurialLocationEw @x.plot.LowPairEw/@x.plot.HighPairEw @x.sublocation.Direction #@x.burial.BurialNum @x.burial.BurialSubnum</td>
+                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.SouthToHead</td>
+                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.SouthToFeet</td>
+                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.EastToHead</td>
+                                    </tr>
 
-                            }
-                            @if (x.burialadvanced.BurialDepth != null)
-                            {
-                                <div>Depth: @x.burialadvanced.BurialDepth <br /></div>
-                            }
-
-                        </div>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-            </div>
-}
+</div>
 

@@ -183,7 +183,7 @@ namespace byudigs.Controllers
             ViewBag.Date = _context.Date;
             //var burials = _context.BurialAdvanced.FromSqlRaw("SELECT * from burial_advanced ba join burial b on ba.burial_id = b.burial_id join plot p on b.plot_id = p.plot_id join sublocation s on b.sublocation_id = s.sublocation_id");
            
-
+            //Filter by hair color
             if (!String.IsNullOrEmpty(searchString))
             {
                 List<Burial> burial = _context.Burial.ToList();
