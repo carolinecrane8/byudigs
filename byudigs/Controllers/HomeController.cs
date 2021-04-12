@@ -33,7 +33,7 @@ namespace byudigs.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo)
+        public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo,int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth)
         {
             //This will grab the largest date id and increment it one to make sure that it is unique
             int dateid = _context.Date.Select(x => x.DateId).Max();
@@ -67,7 +67,20 @@ namespace byudigs.Controllers
                 SublocationId = SublocationInfo,
                 DateId = dateid
             });
-
+            _context.SaveChanges();
+            //add the data to burial advanced
+            int advancedid = _context.BurialAdvanced.Select(x => x.AdvancedId).Max();
+            advancedid = advancedid + 1;
+            _context.BurialAdvanced.Add(new BurialAdvanced
+            {
+                AdvancedId = advancedid,
+                SouthToFeet = SouthToFeet,
+                SouthToHead = SouthToFeet,
+                EastToFeet = WestToFeet,
+                EastToHead = WestToHead,
+                BurialDepth = Depth,
+                LengthOfRemains = Length
+            });
             _context.SaveChanges();
             //int highpairew = (int)p.HighPairEw;
             return View("BurialList", _context.Plot);
