@@ -26,8 +26,8 @@ namespace byudigs.Controllers
         }
 
         //JAMIE's CONTROLLER PART
-        //[Authorize(Roles ="SuperAdmin, Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles ="SuperAdmin, Admin")]
+
         [HttpGet]
         public IActionResult AddBurialSimple()
         {
@@ -36,8 +36,7 @@ namespace byudigs.Controllers
             ViewBag.Sublocation = _context.Sublocation;
             return View();
         }
-        //[Authorize(Roles = "SuperAdmin, Admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         [HttpPost]
         public IActionResult AddBurialSimple(Burial b,int PlotInfo, int month, int day, int year, int SublocationInfo,int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth)
         {
@@ -96,15 +95,15 @@ namespace byudigs.Controllers
             return RedirectToAction("BurialList");
         }
 
-        [AllowAnonymous]
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public IActionResult AddNewPlot()
         {
             return View();
         }
         
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public IActionResult AddNewPlot(Plot p)
         {
             int plotid = _context.Plot.Select(x => x.PlotId).Max();
@@ -118,29 +117,9 @@ namespace byudigs.Controllers
             return View("AddBurialSimple");
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult AddBurialAdvanced()
-        {
-            return View();
-        }
-
+        
         [HttpPost]
-        [AllowAnonymous]
-        public IActionResult AddBurialAdvanced(BurialAdvanced ba)
-        {
-            int plotid = _context.Plot.Select(x => x.PlotId).Max();
-
-            return View("AddBurialSimple");
-        }
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult AddCranial()
-        {
-            return View();
-        }
-        [AllowAnonymous]
-        [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public IActionResult AddCranial(Cranial c)
         {
             int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
@@ -258,7 +237,7 @@ namespace byudigs.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public IActionResult EditBurial(int id)
         {
             var burial = _context.Burial.Where(x => x.BurialId == id).FirstOrDefault();
@@ -274,7 +253,7 @@ namespace byudigs.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public IActionResult EditBurial(Burial b, int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth, string HairColor)
         {
             var burialEdit = _context.Burial.Where(x => x.BurialId == b.BurialId).FirstOrDefault();
@@ -301,6 +280,7 @@ namespace byudigs.Controllers
         }
 
         [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Remove(int id)
         {
             var burialEdit = _context.Burial.Where(x => x.BurialId == id).FirstOrDefault();
