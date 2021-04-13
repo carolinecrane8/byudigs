@@ -39,6 +39,7 @@ namespace byudigs
             //builder.DataSource = "aa1fwuwv40o8w63.cfeuysvujco9.us-east-2.rds.amazonaws.com:1433";
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IPasswordHasher<IdentityBuilder>, PasswordHasher>();
             //ad context from scaffolding
             services.AddDbContext<byu_digsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ByuDigsDb")));
             services.AddDbContext<ApplicationDbContext>(options =>
