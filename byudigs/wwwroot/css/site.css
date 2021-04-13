@@ -17,8 +17,8 @@ a {
 
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  background-color: #a1cfff;
+  border-color: #a1cffe;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -71,7 +71,7 @@ body {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 10px; /* Vertically center the text there */
 }
 
 /*
@@ -290,13 +290,12 @@ sup {
 }
 
 a {
-    color: #64a19d;
-    text-decoration: none;
+    color: rgba(0,0,0,0.8);
     background-color: transparent;
 }
 
     a:hover {
-        color: #467370;
+        color: #7dc6fd;
         text-decoration: underline;
     }
 
@@ -2686,33 +2685,33 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #64a19d;
-    border-color: #64a19d;
+    background-color: #7dc6fd;
+    border-color: #7dc6fd;
 }
 
     .btn-primary:hover {
         color: #fff;
-        background-color: #548b87;
-        border-color: #4f837f;
+        background-color: #a1cfff;
+        border-color: #a1cfff;
     }
 
     .btn-primary:focus, .btn-primary.focus {
         color: #fff;
-        background-color: #548b87;
-        border-color: #4f837f;
+        background-color: #a1cfff;
+        border-color: #a1cfff;
         box-shadow: 0 0 0 0.2rem rgba(123, 175, 172, 0.5);
     }
 
     .btn-primary.disabled, .btn-primary:disabled {
         color: #fff;
-        background-color: #64a19d;
-        border-color: #64a19d;
+        background-color: #a1cfff;
+        border-color: #a1cfff;
     }
 
     .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
         color: #fff;
-        background-color: #4f837f;
-        border-color: #4a7b78;
+        background-color: #a1cfff;
+        border-color: #a1cfff;
     }
 
         .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
@@ -3276,7 +3275,7 @@ fieldset:disabled a.btn {
 }
 
     .btn-link:hover {
-        color: #467370;
+        color: #7dc6fd;
         text-decoration: underline;
     }
 
@@ -5189,7 +5188,7 @@ input[type=button].btn-block {
 
     .page-link:hover {
         z-index: 2;
-        color: #467370;
+        color: #7dc6fd;
         text-decoration: none;
         background-color: #e9ecef;
         border-color: #dee2e6;
@@ -10640,7 +10639,7 @@ button.bg-black:focus {
 }
 
 a.text-primary:hover, a.text-primary:focus {
-    color: #467370 !important;
+    color: #7dc6fd !important;
 }
 
 .text-secondary {
@@ -10934,7 +10933,7 @@ body {
                 }
 
                 #mainNav.navbar-shrink .nav-link:active {
-                    color: #467370;
+                    color: #7dc6fd;
                 }
 
                 #mainNav.navbar-shrink .nav-link.active {
@@ -10972,7 +10971,17 @@ body {
         font-size: 2.5rem;
         line-height: 2.5rem;
         letter-spacing: 0.8rem;
-        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+        background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .55));
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    .masthead h4 {
+        font-family: "Varela Round", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        /*font-size: 2.5rem;
+        line-height: 2.5rem;
+        letter-spacing: 0.8rem;*/
+        background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
         -webkit-text-fill-color: transparent;
         -webkit-background-clip: text;
         background-clip: text;
@@ -11010,7 +11019,7 @@ body {
 
 .about-section {
     padding-top: 10rem;
-    background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
+    background: linear-gradient(to bottom, #39a9fd 0%, rgba(255, 255, 255, 0.6) 75%, rgba(255, 255, 255, 0.8) 100%);
 }
 
     .about-section p {
@@ -11043,7 +11052,7 @@ body {
     }
 
         .projects-section .project-text hr {
-            border-color: #64a19d;
+            border-color: aqua;
             border-width: 0.25rem;
             width: 30%;
         }
@@ -11086,7 +11095,7 @@ body {
         }
 
         .contact-section .card hr {
-            border-color: #64a19d;
+            border-color: #7dc6fd;
             border-width: 0.25rem;
             width: 3rem;
         }
