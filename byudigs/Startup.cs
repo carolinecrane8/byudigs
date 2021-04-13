@@ -50,15 +50,15 @@ namespace byudigs
                 .AddDefaultUI()
             .AddDefaultTokenProviders();
             services.AddControllersWithViews();
-            services.AddAuthentication()
-    .AddGoogle(options =>
-    {
-        IConfigurationSection googleAuthNSection =
-            Configuration.GetSection("Authentication:Google");
+    //        services.AddAuthentication()
+    //.AddGoogle(options =>
+    //{
+    //    IConfigurationSection googleAuthNSection =
+    //        Configuration.GetSection("Authentication:Google");
 
-        options.ClientId = googleAuthNSection["ClientId"];
-        options.ClientSecret = googleAuthNSection["ClientSecret"];
-    });
+    //    options.ClientId = googleAuthNSection["ClientId"];
+    //    options.ClientSecret = googleAuthNSection["ClientSecret"];
+    //});
             services.AddRazorPages();
         }
 
