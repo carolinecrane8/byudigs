@@ -202,7 +202,7 @@ namespace byudigs.Controllers
                                    burial = b,
                                    burialadvanced = ba,
                                    plot = p,
-                                   sublocation = s
+                                   sublocation = s,
                                };
                 return View(burialRecord);
             }
