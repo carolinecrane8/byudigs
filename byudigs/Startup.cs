@@ -51,6 +51,15 @@ namespace byudigs
                 .AddDefaultUI()
             .AddDefaultTokenProviders();
             services.AddControllersWithViews();
+            services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        IConfigurationSection googleAuthNSection =
+            Configuration.GetSection("Authentication:Google");
+
+        options.ClientId = googleAuthNSection["ClientId"];
+        options.ClientSecret = googleAuthNSection["ClientSecret"];
+    });
             services.AddRazorPages();
         }
 
@@ -79,8 +88,15 @@ namespace byudigs
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}");
+                endpoints.MapControllerRoute(
+                    name: "hair",
+                    pattern: "{controller=Home}/{action=BurialList}/Hair/{searchString?}");
+                endpoints.MapControllerRoute(
+                   name: "year",
+                   pattern: "{controller=Home}/{action=BurialList}/Year/{yearInt?}");
+
                 endpoints.MapRazorPages();
             });
         }

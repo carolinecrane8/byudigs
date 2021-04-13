@@ -1,0 +1,128 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model byudigs.Models.Burial
+<link href="~/css/Form.css" rel="stylesheet" />
+<link href=“//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css” rel=“stylesheet” id=“bootstrap-css”>
+<script src=“//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js”></script>
+<script src=“//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js”></script>
+<link href=“https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css” rel=“stylesheet”>
+<link rel=“stylesheet” href=“https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css”>
+<link rel=“stylesheet” href=“assets/css/style.css”>
+<!--Create a form that will pull new movie information-->
+<br />
+<br />
+<br />
+<section class="get-in-touch">
+    <div class="registration-form">
+        <h1 class="title">Edit Burial</h1>
+        <form method="post" asp-action="EditBurial" class="contact-form row">
+            <div class="form-field col-lg-6">
+                <select id="PlotInfo" name="PlotInfo">
+                    <option value="">Select One</option>
+                    <option value="@ViewBag.SelectedPlot" selected>@ViewBag.SelectedPlot.BurialLocationNs</option>
+                    @foreach (var plot in ViewBag.Plots)
+                    {
+                        @if (plot.PlotId != 1)
+                        {
+                            <option value="@plot.PlotId">@plot.BurialLocationNs @plot.LowPairNs/@plot.HighPairNs @plot.BurialLocationEw @plot.LowPairEw/@plot.HighPairEw</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-field col-lg-6">
+                <select id="SublocationInfo" name="SublocationInfo">
+                    <option value="">Select One</option>
+                    <option value="@ViewBag.SelectedSublocation" selected>@ViewBag.SelectedSublocation.Direction</option>
+                    @foreach (var sublocation in ViewBag.Sublocation)
+                    {
+                        @if (sublocation.Area == null)
+                        {
+                            @if (sublocation.SublocationId != 1)
+                            {
+                                <option value="@sublocation.SublocationId">@sublocation.Direction</option>
+                            }
+
+                        }
+
+                    }
+
+                </select>
+            </div>
+
+            <div class="form-field col-lg-6">
+                <!--Create Input for BurialNum -->
+                <label asp-for="BurialNum">Burial Number</label>
+                <input asp-for="BurialNum" />
+            </div>
+            <div class="form-field col-lg-6">
+                <!--Create Input for BurialSubNum -->
+                <label asp-for="BurialSubnum">Burial Subnumber</label>
+                <input asp-for="BurialSubnum" />
+            </div>
+            <div class="form-field col-lg-6">
+                <!--Create Input for SouthToHead -->
+                <label name="SouthToHead">South to Head</label>
+                <input name="SouthToHead" value="@ViewBag.SelectedBurialAdvanced.SouthToHead" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for SouthToFeet*@
+                <label name="SouthToFeet">South To Feet</label>
+                <input name="SouthToFeet" value="@ViewBag.SelectedBurialAdvanced.SouthToFeet" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for WestToHead*@
+                <label name="WestToHead">West to Head</label>
+                <input name="WestToHead" value="@ViewBag.SelectedBurialAdvanced.EastToHead" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for WestToFeet*@
+                <label name="WestToFeet">West to Feet</label>
+                <input name="WestToFeet" value="@ViewBag.SelectedBurialAdvanced.EastToFeet" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for Length*@
+                <label name="Length">Length</label>
+                <input name="Length" value="@ViewBag.SelectedBurialAdvanced.LengthOfRemains" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for Depth*@
+                <label name="Depth">Depth</label>
+                <input name="Depth" value="@ViewBag.SelectedBurialAdvanced.BurialDepth" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for Depth*@
+                <label name="HairColor">Hair Color</label>
+                <input name="HairColor" value="@ViewBag.SelectedBurialAdvanced.HairColor" />
+            </div>
+            <div class="form-field col-lg-6">
+                @*Create Input for BurialSubNum*@
+                <label asp-for="Notes">Notes</label>
+                <input asp-for="Notes" />
+            </div>
+            <input hidden asp-for="RackNum" />
+            <input hidden asp-for="BagNum" />
+            <input hidden asp-for="BurialNum" />
+            <input hidden asp-for="BurialSubnum" />
+            <input hidden asp-for="PreviouslySampled" />
+            <input hidden asp-for="BurialId" />
+            <input hidden asp-for="PlotId" />
+            <input hidden asp-for="SublocationId" />
+            <input hidden asp-for="UserId" />
+            <input hidden asp-for="DateId" />
+            @*<a asp-action="AddBurialAdvanced">Add more detailed information</a>
+        <a asp-action="AddCranial">Add cranial information</a>*@
+            <div class="form-field col-lg-6">
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
