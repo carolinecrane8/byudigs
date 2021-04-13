@@ -89,13 +89,11 @@ namespace byudigs.Controllers
                 LengthOfRemains = Length
             });
 
-            int cranialid = _context.Cranial.Select(x => x.CranialId).Max();
-            var updatecranial = _context.Cranial.Where(x => x.CranialId == cranialid).FirstOrDefault();
-            updatecranial.BurialId = burialid;
+           
 
             _context.SaveChanges();
             //int highpairew = (int)p.HighPairEw;
-            return View("BurialList", _context.Plot);
+            return RedirectToAction("BurialList");
         }
 
         [AllowAnonymous]
@@ -175,7 +173,7 @@ namespace byudigs.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult BurialList(string searchString)
+        public IActionResult BurialList(string searchString, int yearInt)
         {
             ViewBag.Burial = _context.Burial;
             ViewBag.BurialAdvanced = _context.BurialAdvanced;
@@ -186,6 +184,7 @@ namespace byudigs.Controllers
             //Filter by hair color
             if (!String.IsNullOrEmpty(searchString))
             {
+                ViewBag.Filter = "Filtering by Hair Color: " + searchString;
                 List<Burial> burial = _context.Burial.ToList();
                 List<Plot> plot = _context.Plot.ToList();
                 List<Sublocation> sublocation = _context.Sublocation.ToList();
@@ -206,8 +205,33 @@ namespace byudigs.Controllers
                                };
                 return View(burialRecord);
             }
+
+            else if (yearInt != 0)
+            {
+                ViewBag.Filter = "Filtering by Year: " + yearInt;
+                List<Burial> burial = _context.Burial.ToList();
+                List<Plot> plot = _context.Plot.ToList();
+                List<Sublocation> sublocation = _context.Sublocation.ToList();
+                List<BurialAdvanced> burialadvanced = _context.BurialAdvanced.Where(x => x.YearFound ==yearInt).ToList();
+                var burialRecord = from ba in burialadvanced
+                                   join b in burial on ba.BurialId equals b.BurialId into table1
+                                   from b in table1.ToList()
+                                   join p in plot on b.PlotId equals p.PlotId into table2
+                                   from p in table2.ToList()
+                                   join s in sublocation on b.SublocationId equals s.SublocationId into table3
+                                   from s in table3.ToList()
+                                   select new ViewModel
+                                   {
+                                       burial = b,
+                                       burialadvanced = ba,
+                                       plot = p,
+                                       sublocation = s,
+                                   };
+                return View(burialRecord);
+            }
             else
             {
+                ViewBag.Filter = "";
                 List<Burial> burial = _context.Burial.ToList();
                 List<Plot> plot = _context.Plot.ToList();
                 List<Sublocation> sublocation = _context.Sublocation.ToList();
@@ -233,6 +257,60 @@ namespace byudigs.Controllers
             //return View(burialRecord.ToList());
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult EditBurial(int id)
+        {
+            var burial = _context.Burial.Where(x => x.BurialId == id).FirstOrDefault();
+            int plotid = burial.PlotId.Value;
+            int sublocationid = burial.SublocationId.Value;
+            ViewBag.SelectedPlot = _context.Plot.Where(x => x.PlotId == plotid).FirstOrDefault();
+            ViewBag.SelectedSublocation = _context.Sublocation.Where(y => y.SublocationId == sublocationid).FirstOrDefault();
+            ViewBag.SelectedBurialAdvanced = _context.BurialAdvanced.Where(t => t.BurialId == burial.BurialId).FirstOrDefault();
+            ViewBag.Plots = _context.Plot;
+            ViewBag.Sublocation = _context.Sublocation;
+            ViewBag.BurialAdvanced = _context.BurialAdvanced;
+            return View(burial);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult EditBurial(Burial b, int SouthToHead, int SouthToFeet, int WestToHead, int WestToFeet, int Length, int Depth, string HairColor)
+        {
+            var burialEdit = _context.Burial.Where(x => x.BurialId == b.BurialId).FirstOrDefault();
+            var advancedBurial = _context.BurialAdvanced.Where(y => y.BurialId == b.BurialId).FirstOrDefault();
+            int advancedBurialId = advancedBurial.AdvancedId;
+            _context.Remove(burialEdit);
+            _context.Remove(advancedBurial);
+            _context.Burial.Add(b);
+            _context.BurialAdvanced.Add(new BurialAdvanced
+            {
+                AdvancedId =advancedBurialId,
+                BurialId = b.BurialId,
+                SouthToHead = SouthToHead,
+                SouthToFeet = SouthToFeet,
+                EastToHead = WestToHead,
+                EastToFeet = WestToFeet,
+                LengthOfRemains = Length,
+                BurialDepth = Depth,
+                HairColor = HairColor
+            });
+            _context.SaveChanges();
+
+            return RedirectToAction("BurialList");
+        }
+
+        [AllowAnonymous]
+        public IActionResult Remove(int id)
+        {
+            var burialEdit = _context.Burial.Where(x => x.BurialId == id).FirstOrDefault();
+            var advancedBurial = _context.BurialAdvanced.Where(y => y.BurialId == id).FirstOrDefault();
+            _context.Burial.Remove(burialEdit);
+            _context.BurialAdvanced.Remove(advancedBurial);
+            _context.SaveChanges();
+
+            return RedirectToAction("BurialList");
+        }
 
         //DONT TOUCH THIS SECTION
         [AllowAnonymous]
