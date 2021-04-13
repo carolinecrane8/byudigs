@@ -71,7 +71,7 @@ body {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 10px; /* Vertically center the text there */
 }
 
 /*
@@ -290,13 +290,12 @@ sup {
 }
 
 a {
-    color: #64a19d;
-    text-decoration: none;
+    color: rgba(0,0,0,0.8);
     background-color: transparent;
 }
 
     a:hover {
-        color: #467370;
+        color: #7dc6fd;
         text-decoration: underline;
     }
 
@@ -3276,7 +3275,7 @@ fieldset:disabled a.btn {
 }
 
     .btn-link:hover {
-        color: #467370;
+        color: #7dc6fd;
         text-decoration: underline;
     }
 
@@ -5189,7 +5188,7 @@ input[type=button].btn-block {
 
     .page-link:hover {
         z-index: 2;
-        color: #467370;
+        color: #7dc6fd;
         text-decoration: none;
         background-color: #e9ecef;
         border-color: #dee2e6;
@@ -10640,7 +10639,7 @@ button.bg-black:focus {
 }
 
 a.text-primary:hover, a.text-primary:focus {
-    color: #467370 !important;
+    color: #7dc6fd !important;
 }
 
 .text-secondary {
@@ -10934,7 +10933,7 @@ body {
                 }
 
                 #mainNav.navbar-shrink .nav-link:active {
-                    color: #467370;
+                    color: #7dc6fd;
                 }
 
                 #mainNav.navbar-shrink .nav-link.active {
@@ -11053,7 +11052,7 @@ body {
     }
 
         .projects-section .project-text hr {
-            border-color: #64a19d;
+            border-color: aqua;
             border-width: 0.25rem;
             width: 30%;
         }
@@ -11096,7 +11095,7 @@ body {
         }
 
         .contact-section .card hr {
-            border-color: #64a19d;
+            border-color: #7dc6fd;
             border-width: 0.25rem;
             width: 3rem;
         }

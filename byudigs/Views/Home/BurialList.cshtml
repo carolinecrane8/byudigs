@@ -3,79 +3,74 @@
 
 <link href="~/css/Table.css" rel="stylesheet" />
 
-<br />
-<br />
-<br />
-<br />
-<section class="get-in-touch">
-    <h1 class="title">Mummy Finder</h1>
-    <div class="container py-5">
-        @*<header class="text-center text-white">
-                <h1 class="display-4">Bootstrap Datatables</h1>
-                <p class="lead mb-0">
-                    Using Bootstrap 4 and <a href="https://datatables.net/examples/styling/bootstrap4.html" class="text-white font-italic">
-                        <u>Datatables</u>
-                    </a>, add interaction controlsto your HTML tables.
-                </p>
-                <p class="font-italic">
-                    Snippet By
-                    <a href="https://bootstrapious.com" class="text-white">
-                        <u>Bootstrapious</u>
-                    </a>
-                </p>
-            </header>*@
-        @*<input name="searchString" />*@
-        <div class="row py-5">
-            <div class="col-lg-10 mx-auto">
-                <div class="card rounded shadow border-0">
-                    <div class="card-body p-5 bg-white rounded">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <!--This is creating the headers of the table-->
-                                        <th style="padding-left:8px; padding-right:8px;">Location:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">South to Head:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">South to Feet:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">West to Head:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">West to Feet:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Length:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Burial Depth:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Hair:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Gender:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Head Direction:</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Artifact Found?</th>
-                                        <th style="padding-left:8px; padding-right:8px;">Date Discovered</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var x in Model)
-                                    {
-                                    <tr>
-                                        <!--This is assigning the model variables to the list so that it can be seen in this view-->
-                                        <td style="padding-left:8px; padding-right:8px;"> @x.burialadvanced.HairColor @x.burial.BurialNum @x.plot.BurialLocationNs @x.plot.LowPairNs/@x.plot.HighPairNs @x.plot.BurialLocationEw @x.plot.LowPairEw/@x.plot.HighPairEw @x.sublocation.Direction #@x.burial.BurialNum @x.burial.BurialSubnum</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.SouthToHead</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.SouthToFeet</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.EastToHead</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.EastToFeet</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.LengthOfRemains</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.BurialDepth</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.HairColor</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.GenderBodyCol</td>
-                                        <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.HeadDirection</td>
-                                        <th style="padding-left:8px; padding-right:8px;">@x.burialadvanced.ArtifactFound</th>
-                                        <th style="padding-left:8px; padding-right:8px;">@x.burialadvanced.MonthFound/@x.burialadvanced.DayFound/@x.burialadvanced.YearFound</th>
-                                    </tr>
+<style>
+    #rectangle {
+        width: 1300px;
+        height: auto;
+        background: rgba(255,255,255,.70);
+        position: relative;
+        margin-left: 120px;
+    }
+</style>
 
-                                    }
-                                </tbody>
-                            </table>
+<br />
+<br />
+<div id="rectangle">
+    <br />
+    <section class="get-in-touch">
+        <h1 class="title">Mummy Finder</h1>
+        <div class="container py-5">
+            <div class="row py-5">
+                <div class="col-lg-15 mx-auto">
+                    <div class="card rounded shadow border-0">
+                        <div class="card-body p-5 bg-white rounded">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <!--This is creating the headers of the table-->
+                                            <th style="padding-left:8px; padding-right:8px;">Location:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">South to Head:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">South to Feet:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">West to Head:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">West to Feet:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Length:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Burial Depth:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Hair:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Gender:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Head Direction:</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Artifact Found?</th>
+                                            <th style="padding-left:8px; padding-right:8px;">Date Discovered</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var x in Model)
+                                        {
+                                            <tr>
+                                                <!--This is assigning the model variables to the list so that it can be seen in this view-->
+                                                <td style="padding-left:8px; padding-right:8px;"> @x.burialadvanced.HairColor @x.burial.BurialNum @x.plot.BurialLocationNs @x.plot.LowPairNs/@x.plot.HighPairNs @x.plot.BurialLocationEw @x.plot.LowPairEw/@x.plot.HighPairEw @x.sublocation.Direction #@x.burial.BurialNum @x.burial.BurialSubnum</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.SouthToHead</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.SouthToFeet</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.EastToHead</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.EastToFeet</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.LengthOfRemains</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.BurialDepth</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.HairColor</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.GenderBodyCol</td>
+                                                <td style="padding-left:8px; padding-right:8px;">@x.burialadvanced.HeadDirection</td>
+                                                <th style="padding-left:8px; padding-right:8px;">@x.burialadvanced.ArtifactFound</th>
+                                                <th style="padding-left:8px; padding-right:8px;">@x.burialadvanced.MonthFound/@x.burialadvanced.DayFound/@x.burialadvanced.YearFound</th>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
     </div>
-</section>
-<div>
-}
+    }
